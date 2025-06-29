@@ -1,0 +1,42 @@
+#include <LiquidCrystal.h>
+
+// LCD pin connections: RS, E, D4, D5, D6, D7
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+const int buttonPin = 7;    // Push button connected to digital pin 7
+int buttonState;            // Current state of the button
+int lastButtonState = LOW;  // Previous state of the button
+unsigned long lastDebounceTime = 0;  // Last time the output changed
+unsigned long debounceDelay = 50;    // Debounce time in ms
+
+int counter = 0;
+
+void setup() {
+  pinMode(buttonPin, INPUT_PULLUP); // Internal pull-up resistor
+  lcd.begin(16, 2);
+  lcd.print("Count: 0");
+  Serial.begin(9600);
+  Serial.println("Button Counter");
+}
+
+void loop() {
+  int reading = digitalRead(buttonPin);
+
+  if (reading != lastButtonState) {
+    lastDebounceTime = millis(); // Reset debounce timer
+  }
+
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+    // If the button state has changed:
+    if (reading == LOW && lastButtonState == HIGH) { // Button pressed
+      counter++;
+      lcd.clear();
+      lcd.print("Count: ");
+      lcd.print(counter);
+      Serial.print("Count: ");
+      Serial.println(counter);
+    }
+  }
+
+  lastButtonState = reading;
+}
