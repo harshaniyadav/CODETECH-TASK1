@@ -30,7 +30,7 @@ Other side to Pin 7
 (Use INPUT_PULLUP in code to avoid needing an external pull-down resistor)
 Diagram:
 
-Code
+Code:
    +5V ---[LCD VDD]-------+
    |                     [LCD A]---(220Ω)---+5V
   [LCD K]---GND
@@ -45,10 +45,10 @@ Code
   
   [Button leg 1]---GND
   [Button leg 2]---Pin 7 (digital input, uses internal pull-up)
-3. Debouncing Explanation
+ Debouncing Explanation":
 Mechanical push buttons can "bounce" when pressed, causing multiple quick on/off signals. The code above uses a debounce routine: after detecting a state change, it waits 50 ms to see if the state is stable before counting the press.
 
-4. Result
+ Result:
 Each time the button is pressed, the counter increments by 1.
 The count displays on both the LCD and the Serial Monitor.
 Debouncing ensures accurate counting.
